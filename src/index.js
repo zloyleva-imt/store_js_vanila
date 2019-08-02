@@ -5,7 +5,7 @@ function createNewElement(tag, content=null, classList=null, attr=null){
     const el = document.createElement(tag);
     (content)
         ?(
-            typeof col == 'object'?appendChildToParent(el, [content]):el.innerText = content
+            typeof content == 'object'?appendChildToParent(el, content):el.innerText = content
         ):'';
 
     
@@ -23,10 +23,28 @@ function appendChildToParent(parent, arrayOfChildren){
     return parent;
 }
 
+fetch('https://zloyleva-imt.github.io/store_js_vanila/src/data.json')
+    .then(res => res.json())
+    .then(res => {
+        console.log(res)
+        //render(res);
+    })
 
-const col = createNewElement('div',null,'col-12');
-const row = createNewElement('div',col,'row');
-const container = createNewElement('div',row, 'container');
+//render([]);
+const h5 = createNewElement('h5','Card title','card-title');
+const p = createNewElement('p','text','card-text');
+const price = createNewElement('p','$100.36','card-text');
+const a = createNewElement('a','Buy','btn btn-primary',[{name:'href',value:'#'}]);
+
+const cardBody = createNewElement('div',[h5,p,price,a],'card-body');
+
+const img = createNewElement('img',null,'card-img-top',[{name:'src',value:'http://lorempixel.com/640/480/'}]);
+
+const card = createNewElement('div',[img,cardBody],'card');
+
+const col = createNewElement('div',[card],'col-12 col-sm-6 col-md-4 col-lg-3');
+const row = createNewElement('div',[col],'row');
+const container = createNewElement('div',[row], 'container');
 
 console.log(container)
 
