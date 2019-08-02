@@ -1,4 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
+import axios from 'axios';
 
 function createNewElement(tag, content=null, classList=null, attr=null){
 
@@ -23,10 +24,9 @@ function appendChildToParent(parent, arrayOfChildren){
     return parent;
 }
 
-fetch('https://zloyleva-imt.github.io/store_js_vanila/src/data.json')
-    .then(res => res.json())
+axios.get('https://zloyleva-imt.github.io/store_js_vanila/src/data.json')
     .then(res => {
-        console.log(res)
+        console.log(res.data)
         //render(res);
     })
 
