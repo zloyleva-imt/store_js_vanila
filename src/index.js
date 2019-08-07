@@ -24,43 +24,77 @@ import {cardApi} from './helpers/Card'
 
 // layout.render('app',layout.createContainer([]));
 
-const prod1 = {
-    name:"Product #1",
-    amount: 120,
-    price: 54.3
-}
-
-const prod2 = {
-    name:"Product #2",
-    amount: 23,
-    price: 36.81
-}
-
-
-// const prepareProductToCard = (product) => {
-//     const {amount, ...prod} = product;
-//     return prod;
+// const prod1 = {
+//     name:"Product #1",
+//     amount: 120,
+//     price: 54.3
 // }
 
-const store = new Map([
-    [cardApi.prepareProductToCard(prod1),3],
-    [cardApi.prepareProductToCard(prod2),20]
-]);
+// const prod2 = {
+//     name:"Product #2",
+//     amount: 23,
+//     price: 36.81
+// }
 
-// store.set(prod1, 1);
-// store.set(prod2, 10);
 
-cardApi.writeToStorage(store)
+// // const prepareProductToCard = (product) => {
+// //     const {amount, ...prod} = product;
+// //     return prod;
+// // }
 
-cardApi.setStore(store,prod1)
+// const store = new Map([
+//     [cardApi.prepareProductToCard(prod1),3],
+//     [cardApi.prepareProductToCard(prod2),20]
+// ]);
 
-const new_store = cardApi.readFormStorage()
+// // store.set(prod1, 1);
+// // store.set(prod2, 10);
 
-// console.log(store.get(cardApi.prepareProductToCard(prod1)))
+// cardApi.writeToStorage(store)
 
-cardApi.writeToStorage(store)
+// cardApi.setStore(store,prod1)
 
-for(let item of store){
-    const [key, value] = item
-    console.log(key, value)
+// const new_store = cardApi.readFormStorage()
+
+// // console.log(store.get(cardApi.prepareProductToCard(prod1)))
+
+// cardApi.writeToStorage(store)
+
+// for(let item of store){
+//     const [key, value] = item
+//     console.log(key, value)
+// }
+
+function Observeble(){
+    let observers = [];
+
+    this.sendMsg = (msg) => {
+        observers.map(el => {
+            el.notify(msg)
+        })
+    }
+
+    this.addObserver = (observer) =>observers.push(observer);
 }
+
+function Observer(behavior){
+    this.notify = (msg) => {
+        behavior(msg)
+    }
+}
+
+const observer1 = new Observer(msg => {
+    console.log("1: " + msg)
+})
+
+const observer2 = new Observer(msg => {
+    const str = "2: " + msg;
+    console.log(str);
+})
+
+const observeble = new Observeble()
+
+observeble.addObserver(observer1);
+observeble.addObserver(observer2)
+
+observeble.sendMsg("MSG")
