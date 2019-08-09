@@ -1,4 +1,6 @@
 import {Builder} from './Builder'
+import {cardApi} from './helpers/Card'
+
 export class BuilderProduct extends Builder{
 
     constructor(product){
@@ -18,6 +20,9 @@ export class BuilderProduct extends Builder{
         a.addEventListener('click', e => {
             e.preventDefault();
             console.log(this.product);
+
+            cardApi.setStore(cardApi.readFormStorage(), this.product)
+            console.log(cardApi.readFormStorage());
         })
 
         const cardBody = this.createNewElement('div',[h5,p,pAmount,priceHtml,a],'card-body');

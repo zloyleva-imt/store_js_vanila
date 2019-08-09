@@ -1,28 +1,27 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {cardApi} from './helpers/Card'
-// import {Fetch} from './Fetch';
+import {Fetch} from './Fetch';
+import {store} from './store'
 
-// import {BuilderProduct} from './BuilderProduct';
-// import {BuilderLayouts} from './BuilderLayouts';
+import {BuilderProduct} from './BuilderProduct';
+import {BuilderLayouts} from './BuilderLayouts';
 
-// const layout = new BuilderLayouts({});
+const layout = new BuilderLayouts({});
 
-// Fetch.get('https://zloyleva-imt.github.io/store_js_vanila/src/data.json')
-//     .then(res => {
-//         const htmlArr = res.data.map(el => {
-//             return new BuilderProduct(el).createSingleCart()
-//         })
-//         layout.render('app',layout.createContainer(htmlArr));
+Fetch.get('https://zloyleva-imt.github.io/store_js_vanila/src/data.json')
+    .then(res => {
+        const htmlArr = res.data.map(el => {
+            return new BuilderProduct(el).createSingleCart()
+        })
+        layout.render('app',layout.createContainer(htmlArr));
       
-//     });
+    });
 
-// const store = {
-//     card: []
-// };
+const initialStore = [];
 
-// localStorage.setItem('store', JSON.stringify(store));
+cardApi.writeToStorage(initialStore)
 
-// layout.render('app',layout.createContainer([]));
+layout.render('app',layout.createContainer([]));
 
 // const prod1 = {
 //     name:"Product #1",
@@ -36,19 +35,10 @@ import {cardApi} from './helpers/Card'
 //     price: 36.81
 // }
 
-
-// // const prepareProductToCard = (product) => {
-// //     const {amount, ...prod} = product;
-// //     return prod;
-// // }
-
 // const store = new Map([
 //     [cardApi.prepareProductToCard(prod1),3],
 //     [cardApi.prepareProductToCard(prod2),20]
 // ]);
-
-// // store.set(prod1, 1);
-// // store.set(prod2, 10);
 
 // cardApi.writeToStorage(store)
 
@@ -65,36 +55,44 @@ import {cardApi} from './helpers/Card'
 //     console.log(key, value)
 // }
 
-function Observeble(){
-    let observers = [];
+// function Observeble(){
+//     let observers = [];
 
-    this.sendMsg = (msg) => {
-        observers.map(el => {
-            el.notify(msg)
-        })
-    }
+//     this.sendMsg = (msg) => {
+//         observers.map(el => {
+//             el.notify(msg)
+//         })
+//     }
 
-    this.addObserver = (observer) =>observers.push(observer);
-}
+//     this.addObserver = (observer) =>observers.push(observer);
+// }
 
-function Observer(behavior){
-    this.notify = (msg) => {
-        behavior(msg)
-    }
-}
+// function Observer(behavior){
+//     this.notify = (msg) => {
+//         behavior(msg)
+//     }
+// }
 
-const observer1 = new Observer(msg => {
-    console.log("1: " + msg)
+// const observer1 = new Observer(msg => {
+//     console.log("1: " + msg)
+// })
+
+// const observer2 = new Observer(msg => {
+//     const str = "2: " + msg;
+//     console.log(str);
+// })
+
+// const observeble = new Observeble()
+
+// observeble.addObserver(observer1);
+// observeble.addObserver(observer2)
+
+// observeble.sendMsg("MSG")
+
+const someEvent = new Event('someEvent')
+
+document.addEventListener('someEvent', () => {
+    console.log('someEvent')
 })
 
-const observer2 = new Observer(msg => {
-    const str = "2: " + msg;
-    console.log(str);
-})
-
-const observeble = new Observeble()
-
-observeble.addObserver(observer1);
-observeble.addObserver(observer2)
-
-observeble.sendMsg("MSG")
+document.dispatchEvent(someEvent)
